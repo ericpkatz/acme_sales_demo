@@ -1,0 +1,26 @@
+{% extends './layout.html' %}
+{% block content %}
+<div class='well'>
+  <form method='POST' action='/salesPeople'>
+    <div class='form-group'>
+      <input class='form-control' name='name' placeholder='enter sales persons name' />
+    </div>
+    <button type='submit' class='btn btn-primary'>Create Sales Person</button>
+  </form>
+</div>
+
+{% for salesPerson in salesPeople %}
+<div class='panel panel-default'>
+  <div class='panel panel-heading'>
+    {{ salesPerson.name }}
+  </div>
+  <div class='panel-body'>
+    <ul class='list-group'>
+      {% for region in regions %}
+      {% include './_listItem.html' with { text: region.zip, addTo: 'Sales Person', salesPerson: salesPerson, region: region, hasIt: salesPerson.hasRegion(region.id), backTo: '/salesPeople' } %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}
